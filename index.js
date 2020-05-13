@@ -39,6 +39,32 @@ client.on('message' , msg => {
 
     execute(client, sender, msg, args, command)
 
+    client.on('voiceStateUpdate', async (oldState, voiceState) => {
+        if (oldState.channel === voiceState.channel) return; // Didn't Leave/Join
+        if (voiceState.channel) return; // Didn't Leave
+        
+        if (client.user === oldState.member.user) return; // Is this bot
+    
+        const connection = await oldState.channel.join();
+    
+        const ttsURL = await googleTTS(
+            `${oldState.member.user.username} has left`,
+            'en',
+            1.2
+        );
+    
+        const dispatcher = connection.play(ttsURL);
+    
+        const disconnectTimeout = setTimeout(() => {
+            if (connection.speaking) connection.disconnect();
+        }, 15000);
+    
+        dispatcher.on('finish', () => {
+            connection.disconnect();
+            clearTimeout(disconnectTimeout);
+        });
+    });
+    
     
 })
 

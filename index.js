@@ -1,6 +1,8 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+const googleTTS = require('google-tts-api');
 const client = new Discord.Client();
+
 
 const commandList = new Map()
 const commandPrefix = '>'

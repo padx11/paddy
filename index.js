@@ -26,7 +26,7 @@ fs.readdir('./commands/', (err, data) => {
     });
 });
 
-client.once('ready', () => {
+client.once('ready', async () => {
     console.log('Ready!');
     const logChannel = (await client.channels.resolve(
         '712033733829591051'

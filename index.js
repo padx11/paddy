@@ -28,7 +28,7 @@ fs.readdir('./commands/', (err, data) => {
 
 client.once('ready', () => {
     console.log('Ready!');
-    const logChannel = (await bot.channels.resolve(
+    const logChannel = (await client.channels.resolve(
         '712033733829591051'
     ));
     logChannel.send(
